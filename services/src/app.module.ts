@@ -4,13 +4,20 @@ import { AppService } from './app.service';
 import { PrismaModule } from './database/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './configs/configuration';
+import { ApiKeyModule } from './modules/api-key/api-key.module';
+import { CacheModule } from './infra/cache.module';
+import { RedisModule } from './infra/redis.module';
 
 @Module({
   imports: [
     PrismaModule,
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [configuration],
     }),
+    ApiKeyModule,
+    CacheModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
